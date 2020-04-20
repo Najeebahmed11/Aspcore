@@ -28,13 +28,13 @@ namespace EmployeeManagement
 
             app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
-            });
+            _ = app.UseEndpoints(endpoints =>
+              {
+                  _ = endpoints.MapGet("/", async context =>
+                    {
+                        await context.Response.WriteAsync(System.Diagnostics.Process.GetCurrentProcess().ProcessName);
+                    });
+              });
         }
     }
 }
