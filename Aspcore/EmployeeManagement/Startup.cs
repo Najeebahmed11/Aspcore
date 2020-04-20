@@ -17,7 +17,11 @@ namespace EmployeeManagement
         public void ConfigureServices(IServiceCollection services)
         {
         }
-
+        //kestro in itself webserver
+        //it can use incoming http req
+        //by using dot net exe
+        //kestrol can be used with reverse proxy server
+        //
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
