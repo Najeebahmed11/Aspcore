@@ -10,7 +10,15 @@ namespace Aspcore
     {
         static void Main(string[] args)
         {
-            //ssssssssddsd
+            //asp.net core:for clod based internet connected apps
+            //cross platform :can only run on windows platform..>old version
+            //iA result is interface and it got several implimentations
+            //conntroller class reult json result which we exposes
+            //in mvc it done view result
+            // aspnet.core eneble testability and dependency injection
+            // it provide modularity
+            //
+
         }
     }
 }
