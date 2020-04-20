@@ -13,6 +13,11 @@ namespace EmployeeManagement
     {
         public static void Main(string[] args)
         {
+            //in aspnet core file and folder references are not included
+            //target framwork monika is 3.1
+            //hosting model:iprocess,out process
+            //meta package has no package of its own it just contain dependecies
+            //
             CreateHostBuilder(args).Build().Run();
         }
 
