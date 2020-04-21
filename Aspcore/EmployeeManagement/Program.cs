@@ -14,10 +14,10 @@ namespace EmployeeManagement
     {
         public static void Main(string[] args)
         {
-           //middleware
-           //it has access to both incoming request and outgoing respond
-           //it has logging and static middleware and mvc
-           //lloginng logs the time when request is recieved
+           //configuring the req
+           //run midl can only write the message
+           //terminal middleware:that do not call next middleware
+           //we have to (use) and (next) comand for this
            //
             CreateHostBuilder(args).Build().Run();
         }

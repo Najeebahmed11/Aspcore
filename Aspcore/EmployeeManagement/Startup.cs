@@ -45,7 +45,7 @@ namespace EmployeeManagement
               {
                   _ = endpoints.MapGet("/", async context =>
                     {
-                        await context.Response.WriteAsync(_config["MyKey"]);
+                        await context.Response.WriteAsync("hello world");
                     });
               });
         }
