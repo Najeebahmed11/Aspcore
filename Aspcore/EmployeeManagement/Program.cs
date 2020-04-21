@@ -14,10 +14,8 @@ namespace EmployeeManagement
     {
         public static void Main(string[] args)
         {
-           //configuring the req
-           //run midl can only write the message
-           //terminal middleware:that do not call next middleware
-           //we have to (use) and (next) comand for this
+           //static files
+           //all static files much present in wwwroot folder
            //
             CreateHostBuilder(args).Build().Run();
         }

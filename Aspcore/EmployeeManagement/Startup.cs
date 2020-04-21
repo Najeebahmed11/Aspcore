@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
 using System.Threading.Tasks;
+using DocumentFormat.OpenXml.InkML;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -38,16 +39,17 @@ namespace EmployeeManagement
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+            
 
-            app.UseRouting();
+            app.Run(async (Context) =>
+            {
+                await Context.Response.WriteAsync("hello ");
+            }
 
-            _ = app.UseEndpoints(endpoints =>
-              {
-                  _ = endpoints.MapGet("/", async context =>
-                    {
-                        await context.Response.WriteAsync("hello world");
-                    });
-              });
+
+            );
         }
     }
 }
