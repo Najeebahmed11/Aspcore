@@ -39,12 +39,13 @@ namespace EmployeeManagement
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseDefaultFiles();
-            app.UseStaticFiles();
+            app.UseFileServer();
+            
             
 
             app.Run(async (Context) =>
             {
+                throw new Exception("some error processing the request");
                 await Context.Response.WriteAsync("hello ");
             }
 
