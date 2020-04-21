@@ -14,7 +14,11 @@ namespace EmployeeManagement
     {
         public static void Main(string[] args)
         {
-           //lesson 14
+           //lesson 15
+           //mvc:it is user iterface layer
+           //model consisit of data
+           //controller:that handles the request and respond
+           //
             CreateHostBuilder(args).Build().Run();
         }
 
