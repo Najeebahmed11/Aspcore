@@ -14,10 +14,10 @@ namespace EmployeeManagement
     {
         public static void Main(string[] args)
         {
-           //in process hosting
-           //create default builder host our app
-           //it set up the web server and load the host and web congiguration
-           //in process deliver higher throughput
+           //middleware
+           //it has access to both incoming request and outgoing respond
+           //it has logging and static middleware and mvc
+           //lloginng logs the time when request is recieved
            //
             CreateHostBuilder(args).Build().Run();
         }
