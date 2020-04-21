@@ -14,9 +14,7 @@ namespace EmployeeManagement
     {
         public static void Main(string[] args)
         {
-           //static files
-           //all static files much present in wwwroot folder
-           //
+           //lesson 14
             CreateHostBuilder(args).Build().Run();
         }
 
