@@ -15,9 +15,12 @@ namespace EmployeeManagement.Models
                     new Employee() { Id = 2, Name = "Hinan", Department = "cs" }
                 };
         }
+
         public Employee GetEmployee(int Id)
         {
-            throw new NotImplementedException();
+                throw new NotImplementedException();
+
+            
         }
     }
 

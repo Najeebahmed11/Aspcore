@@ -1,4 +1,5 @@
-﻿using EmployeeManagement.Models;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using EmployeeManagement.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using System;
@@ -10,7 +11,7 @@ namespace EmployeeManagement.Controllers
 {
     public class HomeController : Controller
     {
-        public IEmployeeRepository _employeeRepository;
+        private readonly IEmployeeRepository _employeeRepository;
         public HomeController()
         {
             _employeeRepository = new MockEmployeeRepository();
@@ -19,6 +20,11 @@ namespace EmployeeManagement.Controllers
         {
             return _employeeRepository.GetEmployee(1).Name;
         }
-      
+        public ViewResult Details()
+        {
+            Employee model = _employeeRepository.GetEmployee(1);
+            return new View(model);
+        }
+
     }
 }

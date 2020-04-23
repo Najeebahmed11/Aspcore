@@ -27,7 +27,7 @@ namespace EmployeeManagement
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvcCore(option => option.EnableEndpointRouting = false);
+            services.AddMvcCore(option => option.EnableEndpointRouting = false).AddXmlSerializerFormatters();
             services.AddSingleton<IEmployeeRepository, MockEmployeeRepository>();
         }
         //kestro in itself webserver
