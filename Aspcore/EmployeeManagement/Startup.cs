@@ -5,6 +5,7 @@ using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
 using System.Threading.Tasks;
 using DocumentFormat.OpenXml.InkML;
+using EmployeeManagement.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -27,6 +28,7 @@ namespace EmployeeManagement
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvcCore(option => option.EnableEndpointRouting = false);
+            services.AddSingleton<IEmployeeRepository, MockEmployeeRepository>();
         }
         //kestro in itself webserver
         //it can use incoming http req
@@ -44,10 +46,9 @@ namespace EmployeeManagement
             app.UseMvcWithDefaultRoute();
             
 
-            app.Run(async (Context) =>
+            app.Run((Context) =>
             {
-                throw new Exception("some error processing the request");   
-                await Context.Response.WriteAsync("hello world");
+                throw new Exception("some error processing the request");
             }
 
             //
