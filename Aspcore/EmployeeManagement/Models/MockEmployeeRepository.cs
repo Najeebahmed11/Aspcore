@@ -1,6 +1,7 @@
 ﻿using EmployeeManagement.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace EmployeeManagement.Models
 {
@@ -11,16 +12,14 @@ namespace EmployeeManagement.Models
         {
             _employeeList = new List<Employee>
                 {
-                    new Employee(){Id=1,Name="najeeb",Department="cs"},
-                    new Employee() { Id = 2, Name = "Hinan", Department = "cs" }
+                    new Employee(){Id=1,Name="najeeb",Department="cs",Email="najeeb@gmail.cpm"},
+                    new Employee() { Id = 2, Name = "Hinan", Department = "cs",Email="hinan@gmail.cpm" }
                 };
         }
 
         public Employee GetEmployee(int Id)
         {
-                throw new NotImplementedException();
-
-            
+            return _employeeList.FirstOrDefault(e => e.Id == Id);
         }
     }
 
