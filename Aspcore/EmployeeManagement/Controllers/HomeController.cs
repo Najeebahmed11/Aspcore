@@ -27,8 +27,8 @@ namespace EmployeeManagement.Controllers
         {
             //in relative path we do not use extension
             Employee model = _employeeRepository.GetEmployee(1);
-            ViewData["Employee"] = model;
-            ViewData["PageTittle"] = "EmployeeDetails";
+            ViewBag.Employee = model;
+            ViewBag.PageTittle = "EmployeeDetails";
             return View();
         }
 

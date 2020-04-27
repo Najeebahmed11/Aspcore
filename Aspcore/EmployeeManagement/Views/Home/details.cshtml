@@ -4,20 +4,18 @@
 </head>
 <body>
     <h3>
-        @ViewData["PageTittle"]
+        @ViewBag.PageTittle
     </h3>
-    @{
-        var employee = ViewData["Employee"] as EmployeeManagement.Models.Employee;
-    }
+    
     <div>
-          Name:@employee.Name
+          Name:@ViewBag.Employee.Name
         
     </div>
     <div>
-        Email:@employee.Email
+        Email:@ViewBag.Employee.Email
     </div>
     <div>
-        Department:@employee.Department
+        Department:@ViewBag.Employee.Department
     </div>
 </body>
 </html>
