@@ -1,15 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
-using System.Threading;
-using System.Threading.Tasks;
-using DocumentFormat.OpenXml.InkML;
 using EmployeeManagement.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -29,8 +21,10 @@ namespace EmployeeManagement
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvcCore(option => option.EnableEndpointRouting = false).AddXmlSerializerFormatters();
+            //services.AddMvc();
             services.AddSingleton<IEmployeeRepository, MockEmployeeRepository>();
-            
+            services.AddMvc();
+
         }
         //kestro in itself webserver
         //it can use incoming http req

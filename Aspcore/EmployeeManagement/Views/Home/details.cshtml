@@ -3,8 +3,21 @@
     <title></title>
 </head>
 <body>
-    <h1>
-        Details.cshtml from view/home folder
-    </h1>
+    <h3>
+        @ViewData["PageTittle"]
+    </h3>
+    @{
+        var employee = ViewData["Employee"] as EmployeeManagement.Models.Employee;
+    }
+    <div>
+          Name:@employee.Name
+        
+    </div>
+    <div>
+        Email:@employee.Email
+    </div>
+    <div>
+        Department:@employee.Department
+    </div>
 </body>
 </html>

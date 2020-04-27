@@ -19,14 +19,17 @@ namespace EmployeeManagement.Controllers
         {
             _employeeRepository = new MockEmployeeRepository();
         }
-        public string index()
+        public string Index()
         {
             return _employeeRepository.GetEmployee(1).Name;
         }
         public ViewResult Details()
         {
+            //in relative path we do not use extension
             Employee model = _employeeRepository.GetEmployee(1);
-            return View(model);
+            ViewData["Employee"] = model;
+            ViewData["PageTittle"] = "EmployeeDetails";
+            return View();
         }
 
     }
