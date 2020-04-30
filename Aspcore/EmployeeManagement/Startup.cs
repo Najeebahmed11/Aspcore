@@ -21,10 +21,6 @@ namespace EmployeeManagement
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-            //services.AddMvcCore(option => option.EnableEndpointRouting = false).AddXmlSerializerFormatters();
-            //services.AddMvc(option => option.EnableEndpointRouting = false).AddXmlSerializerFormatters();
-            //services.AddSingleton<IEmployeeRepository, MockEmployeeRepository>();
-            services.AddMvc(option => option.EnableEndpointRouting = false);
 
         }
         //kestro in itself webserver
@@ -46,18 +42,17 @@ namespace EmployeeManagement
                 app.UseHsts();
             }
 
-
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
 
             //app.UseMvcWithDefaultRoute();
-            app.UseMvc(routes =>
+            //app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
-
-
         }
-
     }
 }
