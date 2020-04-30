@@ -20,10 +20,11 @@ namespace EmployeeManagement
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvcCore(option => option.EnableEndpointRouting = false).AddXmlSerializerFormatters();
-            //services.AddMvc();
-            services.AddSingleton<IEmployeeRepository, MockEmployeeRepository>();
-            services.AddMvc();
+            services.AddRazorPages();
+            //services.AddMvcCore(option => option.EnableEndpointRouting = false).AddXmlSerializerFormatters();
+            //services.AddMvc(option => option.EnableEndpointRouting = false).AddXmlSerializerFormatters();
+            //services.AddSingleton<IEmployeeRepository, MockEmployeeRepository>();
+            services.AddMvc(option => option.EnableEndpointRouting = false);
 
         }
         //kestro in itself webserver
@@ -34,27 +35,28 @@ namespace EmployeeManagement
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-             
-; if (env.IsDevelopment())
+
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseStaticFiles();
-            // app.UseMvcWithDefaultRoute();
-            app.UseMvc(routes=> {
-                routes.MapRoute("default", "{controller}/{action}/{id}");
-            
-            });
-
-            app.Run((Context) =>
+            else
             {
-                throw new Exception("some error processing the request");
+                app.UseExceptionHandler("/Error");
+                app.UseHsts();
             }
 
 
-            //
-            );
-            
+            app.UseStaticFiles();
+            app.UseRouting();
+
+            //app.UseMvcWithDefaultRoute();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+            });
+
+
         }
 
     }
