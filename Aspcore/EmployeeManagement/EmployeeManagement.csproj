@@ -15,6 +15,8 @@
     <PackageReference Include="Aspose.Email" Version="20.3.0" />
     <PackageReference Include="DocumentFormat.OpenXml" Version="2.10.1" />
     <PackageReference Include="EntityFramework" Version="6.4.0" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.WebHost" Version="5.2.7" />
   </ItemGroup>
 
   <ItemGroup>

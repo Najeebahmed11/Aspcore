@@ -13,23 +13,29 @@ using System.Threading.Tasks;
 
 namespace EmployeeManagement.Controllers
 {
+    //[Route("[controller]/[action]")]
+  //  [Route("~/Home")]
     public class HomeController : Controller
     {
+        
         private readonly IEmployeeRepository _employeeRepository;
-        public HomeController()
+        public HomeController(IEmployeeRepository employeeRepository)
         {
-            _employeeRepository = new MockEmployeeRepository();
+            _employeeRepository = employeeRepository;
         }
+      //  [Route("")]
+       // [Route("~/")]
         public ViewResult Index()
         {
             var model= _employeeRepository.GetAllEmployee();
-            return View(model);
+            return View("~/Views/Home/Index.cshtml",model);
         }
-        public ViewResult Details(int id)
+        //[Route("~/{id?}")]
+        public ViewResult Details(int? id)
         {
             HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
             {
-                Employee = _employeeRepository.GetEmployee(id),
+                Employee = _employeeRepository.GetEmployee(id??1),
                 PageTitle = "EmployeeDetails"
             };
             //in relative path we do not use extension

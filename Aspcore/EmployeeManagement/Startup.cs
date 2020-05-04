@@ -1,10 +1,11 @@
-using System;
 using EmployeeManagement.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Web.Http;
 
 namespace EmployeeManagement
 {
@@ -20,8 +21,10 @@ namespace EmployeeManagement
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
-
+            //services.AddRazorPages();
+            services.AddMvc().AddXmlSerializerFormatters();
+            services.AddControllers(); services.AddControllers();
+            services.AddSingleton<IEmployeeRepository, MockEmployeeRepository>(); services.AddSingleton<IEmployeeRepository, MockEmployeeRepository>();
         }
         //kestro in itself webserver
         //it can use incoming http req
@@ -48,11 +51,16 @@ namespace EmployeeManagement
 
             //app.UseMvcWithDefaultRoute();
             //app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
+            //we can not use mvc routes now now we have to use end 
+              app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+              endpoints.MapControllerRoute(name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+               // endpoints.MapControllers();
             });
         }
+        //33
+        
+
     }
 }
