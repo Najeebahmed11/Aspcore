@@ -56,7 +56,7 @@ namespace EmployeeManagement
               app.UseEndpoints(endpoints =>
             {
               endpoints.MapControllerRoute(name: "default",
-                pattern: "ivas/{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Home}/{action=Index}/{id?}");
                // endpoints.MapControllers();
             });
         }
