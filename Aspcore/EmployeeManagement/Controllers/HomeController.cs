@@ -1,20 +1,12 @@
-﻿using DocumentFormat.OpenXml.Drawing.Charts;
-using DocumentFormat.OpenXml.Office2013.Drawing.ChartStyle;
-using DocumentFormat.OpenXml.Wordprocessing;
-using EmployeeManagement.Models;
+﻿using EmployeeManagement.Models;
 using EmployeeManagement.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.AspNetCore.Mvc.ViewFeatures.Buffers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace EmployeeManagement.Controllers
 {
     //[Route("[controller]/[action]")]
-  //  [Route("~/Home")]
+    //  [Route("~/Home")]
     public class HomeController : Controller
     {
         
@@ -31,7 +23,7 @@ namespace EmployeeManagement.Controllers
             return View("~/Views/Home/Index.cshtml",model);
         }
         //[Route("~/{id?}")]
-        public ViewResult Details(int? id)
+        public ViewResult Details(int? id,string name)
         {
             HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
             {
@@ -41,9 +33,16 @@ namespace EmployeeManagement.Controllers
             //in relative path we do not use extension
             return View(homeDetailsViewModel);
         }
+        [HttpGet]
         public ViewResult Create()
         {
             return View();
+        }
+        [HttpPost]
+        public RedirectToActionResult Create(Employee employee)
+        {
+            Employee newEmployee = _employeeRepository.Add(employee);
+            return RedirectToAction("details", new { id = newEmployee.Id });
         }
     }
 }
