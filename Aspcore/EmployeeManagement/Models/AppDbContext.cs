@@ -1,8 +1,8 @@
-﻿using System.Data.Entity;
+﻿
 using Microsoft.EntityFrameworkCore;
 namespace EmployeeManagement.Models
 {
-    public class AppDbContext: Microsoft.EntityFrameworkCore.DbContext
+    public class AppDbContext:DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
             :base(options)
