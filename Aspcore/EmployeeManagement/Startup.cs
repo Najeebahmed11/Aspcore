@@ -28,7 +28,7 @@ namespace EmployeeManagement
             //services.AddRazorPages();
             services.AddMvc().AddXmlSerializerFormatters();
             services.AddControllers(); services.AddControllers();
-            services.AddTransient<IEmployeeRepository, MockEmployeeRepository>(); //services.AddSingleton<IEmployeeRepository, MockEmployeeRepository>();
+            services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>(); //services.AddSingleton<IEmployeeRepository, MockEmployeeRepository>();
         }
         //kestro in itself webserver
         //it can use incoming http req
