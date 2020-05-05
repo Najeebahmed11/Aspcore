@@ -10,8 +10,8 @@ namespace EmployeeManagement.Models
         {
             _employeeList = new List<Employee>
                 {
-                    new Employee(){Id=1,Name="najeeb",Department="cs",Email="najeeb@gmail.cpm"},
-                    new Employee() { Id = 2, Name = "Hinan", Department = "cs",Email="hinan@gmail.cpm" }
+                    new Employee(){Id=1,Name="najeeb",Department=Dept.HR,Email="najeeb@gmail.cpm"},
+                    new Employee() { Id = 2, Name = "Hinan", Department = Dept.IT,Email="hinan@gmail.cpm" }
                 };
         }
 

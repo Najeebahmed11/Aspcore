@@ -41,6 +41,9 @@ namespace EmployeeManagement.Controllers
             //in relative path we do not use extension
             return View(homeDetailsViewModel);
         }
-
+        public ViewResult Create()
+        {
+            return View();
+        }
     }
 }
