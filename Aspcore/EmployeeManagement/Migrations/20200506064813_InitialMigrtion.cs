@@ -2,7 +2,7 @@
 
 namespace EmployeeManagement.Migrations
 {
-    public partial class Init : Migration
+    public partial class InitialMigrtion : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
