@@ -6,6 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200506072946_AddPhotoPathColumn.cs" />
+    <Compile Remove="Migrations\20200506072946_AddPhotoPathColumn.Designer.cs" />
+    <Compile Remove="Migrations\20200506073333_AddSomeProperty.cs" />
+    <Compile Remove="Migrations\20200506073333_AddSomeProperty.Designer.cs" />
+    <Compile Remove="Migrations\20200506073739_AddPhotoPathColumn.cs" />
+    <Compile Remove="Migrations\20200506073739_AddPhotoPathColumn.Designer.cs" />
+    <Compile Remove="Migrations\20200506073943_AddSomeProperty.cs" />
+    <Compile Remove="Migrations\20200506073943_AddSomeProperty.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Models\Employee.cs" />
     <Content Include="Models\IEmployeeRepository.cs" />
     <Content Include="Models\MockEmployeeRepository.cs" />
