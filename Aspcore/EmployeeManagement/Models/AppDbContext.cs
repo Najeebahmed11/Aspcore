@@ -1,9 +1,9 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
-using System.Data.Entity;
+//using System.Data.Entity;
 namespace EmployeeManagement.Models
 {
-    public class AppDbContext: Microsoft.EntityFrameworkCore.DbContext
+    public class AppDbContext: DbContext
     {
         
         public AppDbContext(DbContextOptions<AppDbContext> options)
@@ -11,6 +11,6 @@ namespace EmployeeManagement.Models
         {
 
         }
-        public Microsoft.EntityFrameworkCore.DbSet<Employee> Employees { get; set; }
+        public DbSet<Employee> Employees { get; set; }
     }
 }
