@@ -12,14 +12,6 @@ namespace EmployeeManagement
 {
     public class Program
     {
-        // 2020-05-05
-        // Connection String was wrong corrected in appsettings.json
-        // EntityFrameWork removed and added EntityFrameWorkCore Instead
-        // Migrations folder deleted.
-        // Removed: using System.Data.Entity from AppDbContext.
-        // Run: "Add-Migration Init" and "update-database" in Package Manager Console 
-        // Now database is ready to be used.
-
         public static void Main(string[] args)
         {
            //lesson 15
