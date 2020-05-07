@@ -36,7 +36,7 @@ namespace EmployeeManagement.Controllers
             if (employee == null)
             {
                 Response.StatusCode = 404;
-                return View("EmployyeeNotFound",id.Value);
+                return View("EmployeeNotFound",id.Value);
 
             }
             HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
