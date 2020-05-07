@@ -30,8 +30,9 @@ namespace EmployeeManagement.Controllers
             return View(model);
         }
         //[Route("~/{id?}")]
-        public ViewResult Details(int? id,string name)
+        public ViewResult Details(int? id)
         {
+            throw new Exception("Errors in deatils view");
             Employee employee = _employeeRepository.GetEmployee(id.Value);
             if (employee == null)
             {
