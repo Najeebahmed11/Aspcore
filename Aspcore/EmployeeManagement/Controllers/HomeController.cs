@@ -17,6 +17,7 @@ namespace EmployeeManagement.Controllers
     {
         
         private readonly IEmployeeRepository _employeeRepository;
+      //  [Obsolete]
         private readonly IHostingEnvironment hostingEnvironment;
         private readonly ILogger logger;
 

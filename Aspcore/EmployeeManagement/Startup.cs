@@ -1,6 +1,8 @@
+using Aspose.Email.Clients.Graph;
 using EmployeeManagement.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -26,6 +28,8 @@ namespace EmployeeManagement
         {
             services.AddDbContextPool<AppDbContext>(options => options.UseSqlServer(_config.GetConnectionString("EmployeeDBConnection")));
             //services.AddRazorPages();
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>();
             services.AddMvc().AddXmlSerializerFormatters();
             services.AddControllers(); services.AddControllers();
             services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>(); //services.AddSingleton<IEmployeeRepository, MockEmployeeRepository>();
@@ -53,6 +57,7 @@ namespace EmployeeManagement
 
             //app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseRouting();
 
             //app.UseMvcWithDefaultRoute();
