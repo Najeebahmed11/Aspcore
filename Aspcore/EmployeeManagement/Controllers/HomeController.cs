@@ -1,9 +1,11 @@
-﻿using EmployeeManagement.Models;
+﻿using Aspose.Email.Tools.Logging;
+using EmployeeManagement.Models;
 using EmployeeManagement.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 
@@ -16,11 +18,14 @@ namespace EmployeeManagement.Controllers
         
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IHostingEnvironment hostingEnvironment;
+        private readonly ILogger logger;
 
-        public HomeController(IEmployeeRepository employeeRepository,IHostingEnvironment hostingEnvironment)
+        public HomeController(IEmployeeRepository employeeRepository,
+            IHostingEnvironment hostingEnvironment,ILogger<HomeController> logger)
         {
             _employeeRepository = employeeRepository;
             this.hostingEnvironment = hostingEnvironment;
+            this.logger = logger;
         }
       //  [Route("")]
        // [Route("~/")]
@@ -32,7 +37,14 @@ namespace EmployeeManagement.Controllers
         //[Route("~/{id?}")]
         public ViewResult Details(int? id)
         {
-            throw new Exception("Errors in deatils view");
+            logger.LogTrace("Trace Log");
+            logger.LogDebug("Debug log");
+            logger.LogInformation("Information log");
+            logger.LogWarning("Warning log");
+            logger.LogError("Error log");
+            logger.LogCritical("Critical log");
+
+            // throw new Exception("Errors in deatils view");
             Employee employee = _employeeRepository.GetEmployee(id.Value);
             if (employee == null)
             {
