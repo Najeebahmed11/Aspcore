@@ -28,8 +28,13 @@ namespace EmployeeManagement
         {
             services.AddDbContextPool<AppDbContext>(options => options.UseSqlServer(_config.GetConnectionString("EmployeeDBConnection")));
             //services.AddRazorPages();
-            services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<AppDbContext>();
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 10;
+                options.Password.RequiredUniqueChars = 3;
+
+            }).AddEntityFrameworkStores<AppDbContext>();
+           
             services.AddMvc().AddXmlSerializerFormatters();
             services.AddControllers(); services.AddControllers();
             services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>(); //services.AddSingleton<IEmployeeRepository, MockEmployeeRepository>();
