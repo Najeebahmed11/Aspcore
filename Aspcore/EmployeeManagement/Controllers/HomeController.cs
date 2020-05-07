@@ -27,14 +27,21 @@ namespace EmployeeManagement.Controllers
         public ViewResult Index()
         {
             var model= _employeeRepository.GetAllEmployee();
-            return View("~/Views/Home/Index.cshtml",model);
+            return View(model);
         }
         //[Route("~/{id?}")]
         public ViewResult Details(int? id,string name)
         {
+            Employee employee = _employeeRepository.GetEmployee(id.Value);
+            if (employee == null)
+            {
+                Response.StatusCode = 404;
+                return View("EmployyeeNotFound",id.Value);
+
+            }
             HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
             {
-                Employee = _employeeRepository.GetEmployee(id??1),
+                Employee = employee,        
                 PageTitle = "EmployeeDetails"
             };
             //in relative path we do not use extension
