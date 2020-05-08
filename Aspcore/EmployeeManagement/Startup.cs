@@ -1,8 +1,10 @@
 using Aspose.Email.Clients.Graph;
 using EmployeeManagement.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -35,7 +37,12 @@ namespace EmployeeManagement
 
             }).AddEntityFrameworkStores<AppDbContext>();
            
-            services.AddMvc().AddXmlSerializerFormatters();
+            services.AddMvc(options=> {
+                var policy = new AuthorizationPolicyBuilder()
+                                                        .RequireAuthenticatedUser()
+                                                        .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            }).AddXmlSerializerFormatters();
             services.AddControllers(); services.AddControllers();
             services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>(); //services.AddSingleton<IEmployeeRepository, MockEmployeeRepository>();
         }
@@ -66,7 +73,7 @@ namespace EmployeeManagement
             app.UseRouting();
 
             //app.UseMvcWithDefaultRoute();
-            //app.UseAuthorization();
+            app.UseAuthorization();
             //we can not use mvc routes now now we have to use end 
               app.UseEndpoints(endpoints =>
             {

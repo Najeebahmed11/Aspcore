@@ -1,6 +1,7 @@
 ﻿using Aspose.Email.Tools.Logging;
 using EmployeeManagement.Models;
 using EmployeeManagement.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ using System.IO;
 
 namespace EmployeeManagement.Controllers
 {
+    [Authorize]
     //[Route("[controller]/[action]")]
     //  [Route("~/Home")]
     public class HomeController : Controller
@@ -30,12 +32,14 @@ namespace EmployeeManagement.Controllers
         }
       //  [Route("")]
        // [Route("~/")]
+       [AllowAnonymous]
         public ViewResult Index()
         {
             var model= _employeeRepository.GetAllEmployee();
             return View(model);
         }
         //[Route("~/{id?}")]
+        [AllowAnonymous]
         public ViewResult Details(int? id)
         {
             logger.LogTrace("Trace Log");
@@ -62,11 +66,13 @@ namespace EmployeeManagement.Controllers
             return View(homeDetailsViewModel);
         }
         [HttpGet]
+        //[Authorize]
         public ViewResult Create()
         {
             return View();
         }
         [HttpGet]
+        //[Authorize]
         public ViewResult Edit(int id)
         {
             Employee employee = _employeeRepository.GetEmployee(id);
@@ -81,6 +87,7 @@ namespace EmployeeManagement.Controllers
             return View(employeeEditViewModel);
         }
         [HttpPost]
+        //[Authorize]
         public IActionResult Edit(EmployeeEditViewModel model)
         {
             if (ModelState.IsValid)
@@ -124,6 +131,7 @@ namespace EmployeeManagement.Controllers
         }
 
         [HttpPost]
+        //[Authorize]
         public IActionResult Create(EmployeeCreateViewModel model)
         {
             if (ModelState.IsValid)
