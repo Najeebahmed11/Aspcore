@@ -10,7 +10,7 @@ namespace EmployeeManagement.ViewModels
         [Required]
         [EmailAddress]
         [Remote(action:"IsEmailInUse",controller:"Account")]
-        [ValidEmailDomain(allowedDomain:"namal.edu.com",ErrorMessage ="Email must be @namal.edu.pk")]
+        [ValidEmailDomain(allowedDomain:"namal.edu.pk",ErrorMessage ="Email must be @namal.edu.pk")]
         public string Email { get; set; }
 
         [Required]
@@ -22,5 +22,6 @@ namespace EmployeeManagement.ViewModels
         [Compare("Password",
             ErrorMessage = "Password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+        public string City { get; set; }
     }
 }
