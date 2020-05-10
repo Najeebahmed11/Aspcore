@@ -48,8 +48,12 @@ namespace EmployeeManagement
                 options.AddPolicy("DeleteRolePolicy",
                     policy => policy.RequireClaim("Delete Role"));
 
+
+                options.AddPolicy("EditRolePolicy",
+                    policy => policy.RequireClaim("Edit Role"));
+
                 options.AddPolicy("AdminRolePolicy",
-                    policy => policy.RequireRole("Admin,Test Role")
+                    policy => policy.RequireRole("Admin")
 
                     ); 
             });

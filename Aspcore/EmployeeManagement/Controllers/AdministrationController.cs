@@ -361,6 +361,7 @@ namespace EmployeeManagement.Controllers
             return View(roles);
         }
         [HttpGet]
+        [Authorize(Policy="EditRolePolicy")]
         public async Task<IActionResult> EditRole(string id)
         {
             // Find the role by Role ID
@@ -395,6 +396,7 @@ namespace EmployeeManagement.Controllers
 
 
         [HttpPost]
+        [Authorize(Policy = "EditRolePolicy")]
         public async Task<IActionResult> EditRole(EditRoleViewModel model)
         {
             // Find the role by Role ID
