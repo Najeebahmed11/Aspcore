@@ -3,6 +3,7 @@ using EmployeeManagement.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Routing;
@@ -43,6 +44,14 @@ namespace EmployeeManagement
                                                         .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
             }).AddXmlSerializerFormatters();
+
+            services.ConfigureApplicationCookie(options=> 
+            {
+                options.AccessDeniedPath = new PathString("/Administration/AccessDenied");
+            });
+
+
+
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("DeleteRolePolicy",
