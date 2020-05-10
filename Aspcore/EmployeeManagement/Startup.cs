@@ -59,7 +59,7 @@ namespace EmployeeManagement
 
 
                 options.AddPolicy("EditRolePolicy",
-                    policy => policy.RequireClaim("Edit Role"));
+                    policy => policy.RequireClaim("Edit Role","true"));
 
                 options.AddPolicy("AdminRolePolicy",
                     policy => policy.RequireRole("Admin")
