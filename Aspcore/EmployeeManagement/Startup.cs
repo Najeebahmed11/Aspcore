@@ -1,5 +1,6 @@
 using Aspose.Email.Clients.Graph;
 using EmployeeManagement.Models;
+using EmployeeManagement.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -59,11 +60,7 @@ namespace EmployeeManagement
 
 
                 options.AddPolicy("EditRolePolicy",
-                    policy => policy.RequireAssertion(context=>
-                    context.User.IsInRole("Admin")&&
-                    context.User.HasClaim(claim=>claim.Type=="Edit Role" && claim.Value=="true") || 
-                    context.User.IsInRole("Super Admin")
-                    ));
+                    policy => policy.AddRequirements(new ManageAdminRolesAndClaimsRequirement()));
 
 
                 options.AddPolicy("AdminRolePolicy",
@@ -73,7 +70,9 @@ namespace EmployeeManagement
             });
 
             services.AddControllers(); services.AddControllers();
-            services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>(); //services.AddSingleton<IEmployeeRepository, MockEmployeeRepository>();
+            services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>();
+            services.AddSingleton<IAuthorizationHandler,
+       CanEditOnlyOtherAdminRolesAndClaimsHandler>();
         }
         //kestro in itself webserver
         //it can use incoming http req

@@ -43,6 +43,7 @@ namespace EmployeeManagement.Controllers
 
 
         [HttpGet]
+        [Authorize(Policy = "EditRolePolicy")]
         public async Task<IActionResult> ManageUserClaims(string userId)
         {
             var user = await userManager.FindByIdAsync(userId);
@@ -160,8 +161,8 @@ namespace EmployeeManagement.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult>
-    ManageUserRoles(List<UserRolesViewModel> model, string userId)
+        [Authorize(Policy = "EditRolePolicy")]
+        public async Task<IActionResult> ManageUserRoles(List<UserRolesViewModel> model, string userId)
         {
             var user = await userManager.FindByIdAsync(userId);
 
@@ -371,7 +372,7 @@ namespace EmployeeManagement.Controllers
             return View(roles);
         }
         [HttpGet]
-        [Authorize(Policy="EditRolePolicy")]
+      //  [Authorize(Policy="EditRolePolicy")]
         public async Task<IActionResult> EditRole(string id)
         {
             // Find the role by Role ID
@@ -406,7 +407,7 @@ namespace EmployeeManagement.Controllers
 
 
         [HttpPost]
-        [Authorize(Policy = "EditRolePolicy")]
+        //[Authorize(Policy = "EditRolePolicy")]
         public async Task<IActionResult> EditRole(EditRoleViewModel model)
         {
             // Find the role by Role ID
