@@ -143,19 +143,24 @@ namespace EmployeeManagement.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Find the user by email
                 var user = await userManager.FindByEmailAsync(model.Email);
 
                 if (user != null)
                 {
-                    // reset the user password
-                    var result = await userManager.ResetPasswordAsync(user, model.Token, model.Password);
+                    var result =
+                        await userManager.ResetPasswordAsync(user, model.Token, model.Password);
                     if (result.Succeeded)
                     {
+                        // Upon successful password reset and if the account is lockedout, set
+                        // the account lockout end date to current UTC date time, so the user
+                        // can login with the new password
+                        if (await userManager.IsLockedOutAsync(user))
+                        {
+                            await userManager.SetLockoutEndDateAsync(user, DateTimeOffset.UtcNow);
+                        }
                         return View("ResetPasswordConfirmation");
                     }
-                    // Display validation errors. For example, password reset token already
-                    // used to change the password or password complexity rules not met
+
                     foreach (var error in result.Errors)
                     {
                         ModelState.AddModelError("", error.Description);
@@ -163,11 +168,8 @@ namespace EmployeeManagement.Controllers
                     return View(model);
                 }
 
-                // To avoid account enumeration and brute force attacks, don't
-                // reveal that the user does not exist
                 return View("ResetPasswordConfirmation");
             }
-            // Display validation errors if model state is not valid
             return View(model);
         }
 
@@ -355,7 +357,7 @@ namespace EmployeeManagement.Controllers
                 }
 
                 var result = await signInManager.PasswordSignInAsync(model.Email, model.Password,
-                    model.RememberMe, false);
+                    model.RememberMe, true);
                 if (result.Succeeded)
                 {
                     if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
@@ -368,6 +370,11 @@ namespace EmployeeManagement.Controllers
                     }
                     
                 }
+                if (result.IsLockedOut)
+                {
+                    return View("AccountLocked");
+                }
+
 
                 ModelState.AddModelError(string.Empty, "Invalid Login Attempmt");
 
