@@ -98,8 +98,19 @@ namespace EmployeeManagement.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model,string returnUrl)
         {
+            model.ExternalLogins =
+       (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
+                var user = await userManager.FindByEmailAsync(model.Email);
+
+                if (user != null && !user.EmailConfirmed &&
+                            (await userManager.CheckPasswordAsync(user, model.Password)))
+                {
+                    ModelState.AddModelError(string.Empty, "Email not confirmed yet");
+                    return View(model);
+                }
+
                 var result = await signInManager.PasswordSignInAsync(model.Email, model.Password,
                     model.RememberMe, false);
                 if (result.Succeeded)
@@ -164,6 +175,11 @@ namespace EmployeeManagement.Controllers
                 return View("Login", loginViewModel);
             }
 
+            var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+            ApplicationUser user = null;
+
+
+
             // If the user already has a login (i.e if there is a record in AspNetUserLogins
             // table) then sign-in the user with this external login provider
             var signInResult = await signInManager.ExternalLoginSignInAsync(info.LoginProvider,
@@ -178,12 +194,12 @@ namespace EmployeeManagement.Controllers
             else
             {
                 // Get the email claim value
-                var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+            
 
                 if (email != null)
                 {
                     // Create a new user without password if we do not have a user already
-                    var user = await userManager.FindByEmailAsync(email);
+                    
 
                     if (user == null)
                     {
