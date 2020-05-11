@@ -63,6 +63,8 @@ namespace EmployeeManagement
                     policy => policy.AddRequirements(new ManageAdminRolesAndClaimsRequirement()));
 
 
+
+
                 options.AddPolicy("AdminRolePolicy",
                     policy => policy.RequireRole("Admin")
 
