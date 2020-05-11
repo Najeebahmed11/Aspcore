@@ -18,6 +18,7 @@ namespace EmployeeManagement.Security
                 context.Succeed(requirement);
             }
 
+
             return Task.CompletedTask;
         }
     }
