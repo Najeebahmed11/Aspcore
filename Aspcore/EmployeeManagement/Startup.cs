@@ -102,6 +102,8 @@ namespace EmployeeManagement
             services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>();
             services.AddSingleton<IAuthorizationHandler,CanEditOnlyOtherAdminRolesAndClaimsHandler>();
             services.AddSingleton<IAuthorizationHandler, SuperAdminHandler>();
+
+            services.AddSingleton<DataProtectionPurposeStrings>();
         }
         //kestro in itself webserver
         //it can use incoming http req
