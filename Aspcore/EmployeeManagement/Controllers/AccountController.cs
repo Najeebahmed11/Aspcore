@@ -151,6 +151,7 @@ namespace EmployeeManagement.Controllers
                         await userManager.ResetPasswordAsync(user, model.Token, model.Password);
                     if (result.Succeeded)
                     {
+
                         // Upon successful password reset and if the account is lockedout, set
                         // the account lockout end date to current UTC date time, so the user
                         // can login with the new password
