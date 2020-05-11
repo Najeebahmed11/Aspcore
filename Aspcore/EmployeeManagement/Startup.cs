@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 //using System.Web.Http;
 
 namespace EmployeeManagement
@@ -45,6 +46,14 @@ namespace EmployeeManagement
                                                         .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
             }).AddXmlSerializerFormatters();
+
+            services.AddAuthentication()
+                .AddGoogle(Options =>
+                {
+                    Options.ClientId = "438200310044-qtmmdm89m76ljghdlrr21v0uqseouc5h.apps.googleusercontent.com";
+                    Options.ClientSecret = "JAMX4BeIgEj6FW6DQrzLM4_y";
+                });
+
 
             services.ConfigureApplicationCookie(options=> 
             {
