@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using System;
 //using System.Web.Http;
 
 
@@ -41,6 +42,7 @@ namespace EmployeeManagement
                 options.SignIn.RequireConfirmedEmail = true;
             }).AddEntityFrameworkStores<AppDbContext>()
              .AddDefaultTokenProviders();
+            services.Configure<DataProtectionTokenProviderOptions>(o => o.TokenLifespan = TimeSpan.FromHours(5));
 
             services.AddMvc(options=> {
                 var policy = new AuthorizationPolicyBuilder()
