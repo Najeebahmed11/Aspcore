@@ -38,6 +38,7 @@ namespace EmployeeManagement.Controllers
 
 
 
+
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
