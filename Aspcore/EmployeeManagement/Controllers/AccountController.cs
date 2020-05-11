@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.Logging;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,12 +19,14 @@ namespace EmployeeManagement.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly ILogger<AccountController> logger;
 
         public AccountController(UserManager<ApplicationUser> userManager,
-                                SignInManager<ApplicationUser> signInManager)
+                                SignInManager<ApplicationUser> signInManager,ILogger<AccountController> logger)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.logger = logger;
         }
         [HttpPost]
         
@@ -68,12 +71,20 @@ namespace EmployeeManagement.Controllers
                 var result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var confirmationLink = Url.Action("ConfirmEmail", "Account",
+                                    new { userId = user.Id, token = token }, Request.Scheme);
+
+                    logger.Log(LogLevel.Warning, confirmationLink);
+
                     if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                     {
                         return RedirectToAction("ListUsers", "Administration");
                     }
-                    await signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("index", "home");
+                    ViewBag.ErrorTitle = "Registration successful";
+                    ViewBag.ErrorMessage = "Before you can Login, please confirm your " +
+                            "email, by clicking on the confirmation link we have emailed you";
+                    return View("Error");
                 }
                 foreach (var error in result.Errors)
                 {
@@ -83,6 +94,36 @@ namespace EmployeeManagement.Controllers
             }
             return View(model);
         }
+
+
+    [AllowAnonymous]
+    public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+            if (userId == null || token == null)
+            {
+                return RedirectToAction("index", "home");
+            }
+
+            var user = await userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"The User ID {userId} is invalid";
+                return View("NotFound");
+            }
+
+            var result = await userManager.ConfirmEmailAsync(user, token);
+            if (result.Succeeded)
+            {
+                return View();
+            }
+
+            ViewBag.ErrorTitle = "Email cannot be confirmed";
+            return View("Error");
+        }
+
+
+
+
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl)
