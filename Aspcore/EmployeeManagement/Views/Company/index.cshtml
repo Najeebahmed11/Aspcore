@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Company>
+
+@{ ViewData["Title"] = "Index"; }
+
+<h1>Index SuperAdmin View</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyGuid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleGuid)
+            </th>
+
+        </tr>
+    </thead>
+    
+
+</table>

@@ -1,0 +1,9 @@
+﻿@model QualificationViewModel
+
+@if (Model.Name.Any())
+{
+    foreach (var name in Model.Name)
+    {
+    <p>User @name</p>
+    }
+}

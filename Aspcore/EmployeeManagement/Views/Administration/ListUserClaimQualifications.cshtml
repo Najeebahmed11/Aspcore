@@ -1,0 +1,53 @@
+﻿@model IEnumerable<UserQualfClaim>
+
+@{
+    ViewBag.Title = "All User Qualification Claim";
+}
+    <h1>
+        All User Qualificatin Claim
+    </h1>
+@if (Model.Any())
+{
+<a class="btn btn-primary mb-3" style="width:auto" asp-action="CreateUserQualfClaim"
+   asp-controller="administration">Add new User Qualification Claim</a>
+    foreach (var qualfClaim in Model)
+    {
+        <div class="card mb-3">
+            <div class="card-header">
+                @qualfClaim.UserName
+            </div>
+            <div class="card-footer">
+                <form>
+                    <a asp-action="EditUserQualfClaim" asp-controller="Administration"
+                       asp-route-UserId="@qualfClaim.UserId" class="btn btn-primary" style="width:auto">EditUserQualifications</a>
+
+                    @*<a asp-action="DeleteCourse" asp-controller="Administration"
+                       asp-route-uid="@course.Uid" class="btn btn-danger">Delete</a>
+                    <a asp-action="DetailsCourse" asp-controller="Administration"
+                       class="btn btn-primary">Details</a>*@
+                </form>
+            </div>
+
+        </div>
+    }
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            No course created yet
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Use the button below to create a course
+            </h5>
+            <a class="btn btn-primary" style="width:auto"
+               asp-controller="administration" asp-action="CreateUserQualfClaim">
+                Create User Qualfication Claim
+            </a>
+        </div>
+    </div>
+}
+@section Scripts{
+    <script src="~/js/CustomScript.js"></script>
+}

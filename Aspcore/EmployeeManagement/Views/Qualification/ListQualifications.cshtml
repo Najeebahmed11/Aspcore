@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Qualification>
+
+@{
+    ViewBag.Title = "All Qualifications";
+}
+<h1>
+    All Qualifications
+</h1>
+@if (Model.Any())
+{
+    @*<a class="btn btn-primary mb-3" style="width:auto" asp-action="CreateQualification"
+       asp-controller="qualification">Add new Qualification</a>*@
+    foreach (var qualification in Model)
+    {
+        var photoPath = "~/images/" + (qualification.Photopath ?? "1.PNG");
+        <div class="card m-3" style="min-width: 18rem; max-width:30.5%;">
+            <div class="card mb-3">
+                <div class="card-header">
+                    @qualification.Name
+                </div>
+                <img class="card-img-top imageThumbnail" src="@photoPath"
+                     asp-append-version="true" />
+
+                <div class="card-footer">
+                    <form>
+                        <a asp-action="EditQualifications" asp-controller="qualification"
+                           asp-route-uid="@qualification.Uid" class="btn btn-primary">Edit</a>
+
+                        <a asp-action="DeleteQualification" asp-controller="qualification"
+                           asp-route-uid="@qualification.Uid" class="btn btn-danger">Delete</a>
+                        <a asp-action="DetailsQualification" asp-controller="qualification"
+                           class="btn btn-primary">Details</a>
+                    </form>
+                </div>
+
+            </div>
+            </div>
+            }
+            }
+            else
+            {
+            <div class="card">
+                <div class="card-header">
+                    No Qualification created yet
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        Use the button below to create a Qualification
+                    </h5>
+                    <a class="btn btn-primary" style="width:auto"
+                       asp-controller="qualification" asp-action="CreateQualification">
+                        Create Qualification
+                    </a>
+                </div>
+            </div>
+            }
+            @section Scripts{
+                <script src="~/js/CustomScript.js"></script>
+            }

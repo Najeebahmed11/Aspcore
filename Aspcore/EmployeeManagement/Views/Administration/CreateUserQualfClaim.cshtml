@@ -1,0 +1,30 @@
+﻿@model UserQualfClaimViewModel
+
+@{
+    ViewBag.Title = "User Qualification Claim Registration";
+}
+
+
+<h1>User Qualification Claim Registration</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UserName"></label>
+                <input asp-for="UserName" class="form-control" />
+            </div>
+            @*<div class="form-group">
+                    <label asp-for="Uid"></label>
+                    <input asp-for="Uid" class="form-control" />
+                </div>*@
+
+            @*<div class="form-group">
+                <label asp-for="Description"></label>
+                <input asp-for="Description" class="form-control" />
+            </div>*@
+            <button type="submit" class="btn btn-primary" style="width:auto">Creae User Qualification Claim </button>
+        </form>
+    </div>
+</div>

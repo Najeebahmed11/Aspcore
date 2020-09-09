@@ -1,0 +1,23 @@
+﻿@model IEnumerable<License>
+
+@{
+    ViewBag.Title = "All Licenses details";
+}
+<h1>
+     Licenses details
+</h1>
+@if (Model.Any())
+{
+    foreach (var license in Model)
+    {
+        <div class="card mb-3">
+            <div class="card-header">
+                License Name:  @license.CategoryName
+            </div>
+            
+            <div class="card-body">
+                <h5 class="card-title">License UID: @license.Category</h5>
+            </div>
+        </div>
+    }
+}

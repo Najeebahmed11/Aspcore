@@ -1,0 +1,52 @@
+﻿@model QualificationViewModel
+
+@{
+    ViewBag.Title = "Qualification Registration";
+}
+
+
+<h1>Course Registration</h1>
+<form enctype="multipart/form-data" asp-controller="qualification" asp-action="CreateQualification" method="post" class="mt-3">
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <form method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control" />
+                </div>
+                @*<div class="form-group">
+                        <label asp-for="Uid"></label>
+                        <input asp-for="Uid" class="form-control" />
+                    </div>*@
+
+                <div class="form-group">
+                    <label asp-for="Description"></label>
+                    <input asp-for="Description" class="form-control" />
+                </div>
+                <div class="form-group row">
+                    <label asp-for="Photo" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        <div class="custom-file">
+                            <input asp-for="Photo" class="form-control custom-file-input">
+                            <label class="custom-file-label"> Choose File...</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:auto">CreateQualification</button>
+            </form>
+        </div>
+    </div>
+    @section Scripts {
+   
+    <script>
+                    $(document).ready(function () {
+                        $('.custom-file-input').on("change", function () {
+                            var fileName = $(this).val().split("\\").pop();
+                            $(this).next('.custom-file-label').html(fileName);
+                        });
+                    });
+    </script>
+    }
+    </form>

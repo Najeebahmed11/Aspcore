@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Course>
+
+@{
+    ViewBag.Title = "All Courses details";
+}
+<h1>
+    All Courses details
+</h1>
+@if (Model.Any())
+{
+    foreach (var course in Model)
+    {
+        <div class="card mb-3">
+            <div class="card-header">
+                Course Name:  @course.Name
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Course Description: @course.Description</h5>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Course UID: @course.Uid</h5>
+            </div>
+        </div>
+    }
+}

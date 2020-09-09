@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using System;
+using System.Configuration;
 //using System.Web.Http;
 
 
@@ -33,6 +34,8 @@ namespace EmployeeManagement
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IQualificationRepository, SQLQualificationRepository>();
+            services.AddScoped<ICourseRepository,SQLCourseRepository >();
             services.AddDbContextPool<AppDbContext>(options => options.UseSqlServer(_config.GetConnectionString("EmployeeDBConnection")));
             //services.AddRazorPages();
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
@@ -103,11 +106,14 @@ namespace EmployeeManagement
             });
 
             services.AddControllers(); services.AddControllers();
+            services.AddScoped<ILicenseRepository, SqlLicenseRepository>();
             services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>();
             services.AddSingleton<IAuthorizationHandler,CanEditOnlyOtherAdminRolesAndClaimsHandler>();
             services.AddSingleton<IAuthorizationHandler, SuperAdminHandler>();
 
             services.AddSingleton<DataProtectionPurposeStrings>();
+
+                
         }
         //kestro in itself webserver
         //it can use incoming http req

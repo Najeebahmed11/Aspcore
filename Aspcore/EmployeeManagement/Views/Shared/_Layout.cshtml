@@ -35,19 +35,7 @@
     <title>@ViewBag.Title</title>
 </head>
 <body>
-    <nav class="navbar">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a asp-action="index" asp-controller="home" class="nav-link">List</a>
-
-            </li>
-            <li class="nav-item">
-                <a asp-action="create" asp-controller="home" class="nav-link">Create</a>
-
-            </li>
-        </ul>
-
-    </nav>
+    
     <div class="container">
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark>
             <a class="navbar-brand" asp-action="index" asp-controller="home">
@@ -68,26 +56,77 @@
                         <a asp-action="create" asp-controller="home" class="nav-link">Create</a>
 
                     </li>
-                   @* @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
-                    {*@
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Manage
+                    @*<li class="nav-item">
+            <a asp-action="ListCourses" asp-controller="Administration" class="nav-link">Courses</a>
+
+        </li>*@
+                    <li class="nav-item">
+                        <a asp-action="ListLicenses" asp-controller="Administration" class="nav-link">Licenses</a>
+
+                    </li>
+                    <li class="nav-item">
+                        <a asp-action="Index" asp-controller="Administration" class="nav-link">UserClaimQualifications</a>
+
+                    </li>
+                    <li class="nav-item">
+                        <a asp-action="indexof" asp-controller="Qualification" class="nav-link">Qualifications</a>
+
+                    </li>
+                    <li class="nav-item">
+                        <a asp-action="ListVehicles" asp-controller="Vehicle" class="nav-link">Vehicles</a>
+
+                    </li>
+                    <li class="nav-item">
+                        <a asp-action="index" asp-controller="company" class="nav-link">Company</a>
+
+                    </li>
+                    @*<li class="nav-item">
+            <a asp-action="ListQualifications" asp-controller="Qualification" class="nav-link">Qualifications</a>
+
+        </li>*@
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            List
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" asp-controller="Qualification"
+                               asp-action="ListQualifications">Qualifications</a>
+                            @*<a class="dropdown-item" asp-controller="Administration"
+                   asp-action="ListRoles">Roles</a>
+
+                <a class="dropdown-item" asp-controller="Account"
+                   asp-action="ChangePassword">
+                    Password
+                </a>*@
+                        </div>
+                    </li>
+
+
+
+
+                    @* @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+        {*@
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Manage
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" asp-controller="Administration"
+                               asp-action="ListUsers">Users</a>
+                            <a class="dropdown-item" asp-controller="Administration"
+                               asp-action="ListRoles">Roles</a>
+
+                            <a class="dropdown-item" asp-controller="Account"
+                               asp-action="ChangePassword">
+                                Password
                             </a>
-
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" asp-controller="Administration"
-                                   asp-action="ListUsers">Users</a>
-                                <a class="dropdown-item" asp-controller="Administration"
-                                   asp-action="ListRoles">Roles</a>
-
-                                <a class="dropdown-item" asp-controller="Account"
-                                   asp-action="ChangePassword">
-                                    Password
-                                </a>
-                            </div>
-                        </li>
+                        </div>
+                    </li>
                     @*}*@
                 </ul>
                 <ul class="navbar-nav ml-auto">

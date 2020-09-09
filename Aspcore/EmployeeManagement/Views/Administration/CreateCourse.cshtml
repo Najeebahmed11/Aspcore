@@ -1,0 +1,30 @@
+﻿@model CourseViewModel
+
+@{
+    ViewBag.Title = "Course Registration";
+}
+
+
+<h1>Course Registration</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" />
+            </div>
+            @*<div class="form-group">
+                <label asp-for="Uid"></label>
+                <input asp-for="Uid" class="form-control" />
+            </div>*@
+
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                <input asp-for="Description" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:auto">CreateCourse</button>
+        </form>
+    </div>
+</div>

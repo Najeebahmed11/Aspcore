@@ -83,6 +83,12 @@ namespace EmployeeManagement.Controllers
         }
         [HttpGet]
         //[Authorize]
+        public ViewResult Courses()
+        {
+            return View();
+        }
+        [HttpGet]
+        //[Authorize]
         public ViewResult Create()
         {
             return View();

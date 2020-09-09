@@ -7,16 +7,44 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200506072946_AddPhotoPathColumn.cs" />
-    <Compile Remove="Migrations\20200506072946_AddPhotoPathColumn.Designer.cs" />
-    <Compile Remove="Migrations\20200506073333_AddSomeProperty.cs" />
-    <Compile Remove="Migrations\20200506073333_AddSomeProperty.Designer.cs" />
-    <Compile Remove="Migrations\20200506073739_AddPhotoPathColumn.cs" />
-    <Compile Remove="Migrations\20200506073739_AddPhotoPathColumn.Designer.cs" />
-    <Compile Remove="Migrations\20200506073943_AddSomeProperty.cs" />
-    <Compile Remove="Migrations\20200506073943_AddSomeProperty.Designer.cs" />
-    <Compile Remove="Migrations\20200508113456_Extend_IdentityUser.cs" />
-    <Compile Remove="Migrations\20200508113456_Extend_IdentityUser.Designer.cs" />
+    <Compile Remove="Migrations\20200610042949_NamechangeToUid.cs" />
+    <Compile Remove="Migrations\20200610042949_NamechangeToUid.Designer.cs" />
+    <Compile Remove="Migrations\20200610043209_NamechangeToUidd.cs" />
+    <Compile Remove="Migrations\20200610043209_NamechangeToUidd.Designer.cs" />
+    <Compile Remove="Migrations\20200610075319_Qualificationadded.cs" />
+    <Compile Remove="Migrations\20200610075319_Qualificationadded.Designer.cs" />
+    <Compile Remove="Migrations\20200610080528_Qualificationadded.cs" />
+    <Compile Remove="Migrations\20200610080528_Qualificationadded.Designer.cs" />
+    <Compile Remove="Migrations\20200610080626_Qualificationadded.cs" />
+    <Compile Remove="Migrations\20200610080626_Qualificationadded.Designer.cs" />
+    <Compile Remove="Migrations\20200610080903_Qualificationadded.cs" />
+    <Compile Remove="Migrations\20200610080903_Qualificationadded.Designer.cs" />
+    <Compile Remove="Migrations\20200610081417_Qualificationadded.cs" />
+    <Compile Remove="Migrations\20200610081417_Qualificationadded.Designer.cs" />
+    <Compile Remove="Migrations\20200610082020_Qualificationadded.cs" />
+    <Compile Remove="Migrations\20200610082020_Qualificationadded.Designer.cs" />
+    <Compile Remove="Migrations\20200610082255_Qualificationadded.cs" />
+    <Compile Remove="Migrations\20200610082255_Qualificationadded.Designer.cs" />
+    <Compile Remove="Migrations\20200610082422_Qualificationadded.cs" />
+    <Compile Remove="Migrations\20200610082422_Qualificationadded.Designer.cs" />
+    <Compile Remove="Migrations\20200611112853_UserQualiClaimadded.cs" />
+    <Compile Remove="Migrations\20200611112853_UserQualiClaimadded.Designer.cs" />
+    <Compile Remove="Migrations\20200611113114_UserQualiClaimadded.cs" />
+    <Compile Remove="Migrations\20200611113114_UserQualiClaimadded.Designer.cs" />
+    <Compile Remove="Migrations\20200612064817_UserQualClaimAdded.cs" />
+    <Compile Remove="Migrations\20200612064817_UserQualClaimAdded.Designer.cs" />
+    <Compile Remove="Migrations\20200612152046_UserClaimAndQualificationAdded.cs" />
+    <Compile Remove="Migrations\20200612152046_UserClaimAndQualificationAdded.Designer.cs" />
+    <Compile Remove="Migrations\20200612164028_UserQualificationAdded.cs" />
+    <Compile Remove="Migrations\20200612164028_UserQualificationAdded.Designer.cs" />
+    <Compile Remove="Migrations\20200614035440_UserQualClaimAndQualificationAdded.cs" />
+    <Compile Remove="Migrations\20200614035440_UserQualClaimAndQualificationAdded.Designer.cs" />
+    <Compile Remove="Migrations\20200614114930_NewMig.cs" />
+    <Compile Remove="Migrations\20200614114930_NewMig.Designer.cs" />
+    <Compile Remove="Migrations\20200614115154_NewMigAddedQualificationANdQualificationClaim.cs" />
+    <Compile Remove="Migrations\20200614115154_NewMigAddedQualificationANdQualificationClaim.Designer.cs" />
+    <Compile Remove="Migrations\20200615155320_QualAndClaimAdded.cs" />
+    <Compile Remove="Migrations\20200615155320_QualAndClaimAdded.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,6 +71,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.9.2" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
   </ItemGroup>
 
 </Project>

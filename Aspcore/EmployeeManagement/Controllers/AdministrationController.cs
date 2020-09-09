@@ -2,6 +2,7 @@
 using EmployeeManagement.Models;
 using EmployeeManagement.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -13,6 +14,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web.WebPages.Html;
+//using System.Web.Mvc;
 
 namespace EmployeeManagement.Controllers
 {
@@ -20,18 +23,483 @@ namespace EmployeeManagement.Controllers
     public class AdministrationController: Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
+        
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ILogger<AdministrationController> logger;
+        private readonly AppDbContext context;
+        private readonly ICourseRepository courseRepository;
+        private readonly ILicenseRepository licenseRepository;
+        private readonly IQualificationRepository qualificationRepository;
+        private readonly IHttpContextAccessor httpContextAccessor;
+
+        public object ViewData { get; private set; }
 
         public AdministrationController(RoleManager<IdentityRole> roleManager
                                         ,UserManager<ApplicationUser> userManager
-                                        ,ILogger<AdministrationController> logger)
+                                        ,ILogger<AdministrationController> logger, AppDbContext context
+                              ,ICourseRepository courseRepository, ILicenseRepository licenseRepository
+                              , IQualificationRepository qualificationRepository, IHttpContextAccessor httpContextAccessor)
+             
         {
+            this.httpContextAccessor = httpContextAccessor;
             this.roleManager = roleManager;
-            this.userManager = userManager;
+            this.userManager = userManager; 
             this.logger = logger;
+            this.context = context;
+            this.courseRepository = courseRepository;
+            this.licenseRepository = licenseRepository;
+            this.qualificationRepository = qualificationRepository;
+        }
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            //License user = context.Licenses.FirstOrDefault(c => c.Category == category);
+
+            //context.Licenses.Remove(user);
+            //await context.SaveChangesAsync();
+            UserQualfClaim userQualificationClaim =  context.UserQualfClaims.FirstOrDefault(c=>c.Id==id);
+            context.UserQualfClaims.Remove(userQualificationClaim);
+            await context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
+        public async Task<IActionResult> Delete(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var userQualificationClaim = await context.UserQualfClaims
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (userQualificationClaim == null)
+            {
+                return NotFound();
+            }
+
+            return View(userQualificationClaim);
+        }
+
+        public async Task<IActionResult> Details(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            //var userQualificationClaim = await _context.UserQualificationClaims
+            //    .FirstOrDefaultAsync(m => m.UserID == id);
+            var userQualificationClaim = await context.UserQualfClaims
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (userQualificationClaim == null)
+            {
+                return NotFound();
+            }
+
+            return View(userQualificationClaim);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,UserID,QualificationId,Verified,IsDisabled,DisabledBy,ExpiryDate,IsDeleted,CreatedDate,CreatedByGuid,DeletedDate,DeletedByGuid,ModifiedDate,ModifiedBy")] UserQualfClaim userQualificationClaim)
+        {
+            if (id != userQualificationClaim.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    context.Update(userQualificationClaim);
+                    await context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                        throw;
+                    
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(userQualificationClaim);
+        }
+
+
+
+
+        public async Task<IActionResult> Edit(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var userQualificationClaim = await context.UserQualfClaims.FirstOrDefaultAsync(x => x.Id == id);// .FindAsync(id);
+            if (userQualificationClaim == null)
+            {
+                return NotFound();
+            }
+            return View(userQualificationClaim);
+        }
+
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,UserID,QualificationId,ExpiryDate")] UserQualfClaim uQ)
+        {
+            if (ModelState.IsValid)
+            {
+                if (uQ.UserId == null || uQ.QualificationId == null)
+                {
+                    return View(uQ);
+                }
+
+                //if (UserHasAlreadyCurrentQualificationClaim(uQ.UserId, uQ.QualificationId))
+                //{
+                //    return RedirectToAction(nameof(Index));
+                //}
+
+                uQ.Id = Guid.NewGuid();
+                //uQ.UserID = ;
+                uQ.Verified = false;
+                uQ.IsDisabled = false;
+                //userQualificationClaim.DisabledBy;                
+                uQ.IsDeleted = false;
+               
+                //DeletedDate;
+                //DeletedByGuid;
+                //ModifiedDate;
+                //ModifiedBy
+
+                context.Add(uQ);
+                await context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(uQ);
+        }
+
+
+        public async Task<IActionResult> Create()
+        {
+            var userID = (await userManager.GetUserAsync(HttpContext.User)).Id;
+
+            var qualifications = await context.Qualifications.ToListAsync();
+            // Users registered qualification Claims
+
+            var viewModel = new QClaimTestViewModel
+            {
+                UserID = Guid.Parse(userID),
+                Qualifications = qualifications
+            };
+
+
+            return View("Create", viewModel);
+        }
+
+
+        //public async Task<IActionResult> Create()
+        //{
+        //    var user = await userManager.GetUserAsync(HttpContext.User);
+        //    ViewBag.UserID = user.Id;
+        //    var qualifications = await context.Qualifications.ToListAsync();
+
+        //    var Test = qualifications.Select(x => new SelectListItem
+        //    {
+        //        Text = x.Name,
+        //        Value = x.Uid.ToString()
+        //    }).ToList();
+
+        //    return View();
+        //}
+
+
+        public async Task<IActionResult> Index()
+        {
+            return View(await context.UserQualfClaims.ToListAsync());
+        }
+
+
+
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> CreateUserQualfClaimAsync(UserQualfClaimViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var userQualfClaim = new UserQualfClaim
+                {
+                    UserName = model.UserName,
+                    UserId = Guid.NewGuid(),
+                    // CreatedByGuid ..>extract from usermanager
+                    ModifiedDate = DateTime.Now,
+                    //ModifiedBy = ..>Currrent user
+                    IsDeleted = false
+                };
+                context.UserQualfClaims.Add(userQualfClaim);
+                await context.SaveChangesAsync();
+                return RedirectToAction("ListUserClaimQualifications");
+            }
+            return View(model);
+        }
+
+
+        [HttpGet]
+        public IActionResult CreateUserQualfClaim()
+        {
+
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ListUserClaimQualifications()
+        {
+            return View(await context.UserQualfClaims.ToListAsync());
+        }
+
+
+
+
+        //[HttpGet]
+        //public async Task<IActionResult> EditUserQualificationClaims(Guid userId)
+        //{
+
+        //    ViewBag.userId = userId;
+
+        //    Qualification user = context.Qualifications.FirstOrDefault(c => c.Uid == userId);
+
+        //    if (user == null)
+        //    {
+        //        ViewBag.ErrorMessage = $"User with Id = {userId} cannot be found";
+        //        return View("NotFound");
+        //    }
+
+        //    var model = new List<UserQualfClaimViewModel>();
+
+        //    foreach (var role in roleManager.Roles)
+        //    {
+        //        var userRolesViewModel = new UserRolesViewModel
+        //        {
+        //            RoleId = role.Id,
+        //            RoleName = role.Name
+        //        };
+
+        //        if (await userManager.IsInRoleAsync(user, role.Name))
+        //        {
+        //            userRolesViewModel.IsSelected = true;
+        //        }
+        //        else
+        //        {
+        //            userRolesViewModel.IsSelected = false;
+        //        }
+
+        //        model.Add(userRolesViewModel);
+        //    }
+
+        //    return View(model);
+        //}
+
+
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> DetailsLicense()
+        {
+            return View(await context.Licenses.ToListAsync());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteLicense(Guid category)
+        {
+            License user = context.Licenses.FirstOrDefault(c => c.Category == category);
+
+            context.Licenses.Remove(user);
+            await context.SaveChangesAsync();
+
+            return View(await context.Licenses.ToListAsync());
+
+        }
+
+
+        [HttpGet]
+        public ViewResult EditLicenses(Guid category)
+        {
+            License license = context.Licenses.FirstOrDefault(c => c.Category == category);
+            //check if course is null than return back to view
+            if (license == null)
+            {
+                return View();
+            }
+            LicenseViewModel licenseViewModel = new LicenseViewModel
+            {
+                CategoryName = license.CategoryName,
+            };
+            return View(licenseViewModel);
+        }
+        [HttpPost]
+        //[Authorize]
+        public IActionResult EditLicenses(LicenseViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                License license = licenseRepository.GetLicense(model.Category);
+                license.CategoryName = model.CategoryName;
+                licenseRepository.Update(license);
+                return RedirectToAction("ListLicenses");
+            }
+            return View();
+        }
+
+
+
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> CreateLicenseAsync(LicenseViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var license = new License
+                {
+                    CategoryName = model.CategoryName,
+
+                    Category = Guid.NewGuid()
+                    // CreatedByGuid ..>extract from usermanager
+                    
+                };
+                context.Licenses.Add(license);
+                await context.SaveChangesAsync();
+                return RedirectToAction("ListLicenses");
+            }
+            return View(model);
+        }
+
+
+        [HttpGet]
+        public IActionResult CreateLicense()
+        {
+
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ListCourses()
+        {
+            return View(await context.Courses.ToListAsync());
+        }
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> DetailsCourse()
+        {
+            return View(await context.Courses.ToListAsync());
+        }
+
+        [HttpGet]
+        public ViewResult EditCourses(Guid uid)
+        {
+            Course course = context.Courses.FirstOrDefault(c => c.Uid == uid);
+            //check if course is null than return back to view
+            if (course == null)
+            {
+                return View();
+            }
+            CourseEditViewModel courseEditViewModel = new CourseEditViewModel
+            {
+                Name = course.Name,
+                Description = course.Description
+            };
+            return View(courseEditViewModel);
+        }
+        [HttpPost]
+        //[Authorize]
+        public IActionResult EditCourses(CourseEditViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Course course = courseRepository.GetCourse(model.Uid);
+                course.Name = model.Name;
+                course.Description = model.Description;
+                courseRepository.Update(course);
+                return RedirectToAction("ListCourses");
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ListLicenses()
+        {
+            return View(await context.Licenses.ToListAsync());
+        }
+
+        [HttpGet]
+        public IActionResult CreateCourse()
+        {
+
+            return View();
+        }
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteCourse(Guid uid)
+        {
+            Course user = context.Courses.FirstOrDefault(c => c.Uid == uid);
+
+            context.Courses.Remove(user);
+            await context.SaveChangesAsync();
+
+            return View(await context.Courses.ToListAsync());
+
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteCourses(Guid uid)
+        {
+                Course user =  context.Courses.FirstOrDefault(c => c.Uid == uid);
+            
+                context.Courses.Remove(user);
+                await context.SaveChangesAsync();
+                
+                return View(await context.Courses.ToListAsync());
+            
+        }
+
+
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> CreateCourseAsync(CourseViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var course = new Course
+                {
+                    Name = model.Name,
+                    Description = model.Description,
+                    Alias = model.Alias,
+                    Code = model.Code,
+                    Uid = Guid.NewGuid(),
+                    // CreatedByGuid ..>extract from usermanager
+                    CreatedDate = DateTime.Now,
+                    ModifiedDate = DateTime.Now,
+                    //ModifiedBy = ..>Currrent user
+                    IsDeleted = false,
+                    IsObselete = false
+                };
+                context.Courses.Add(course);
+                await context.SaveChangesAsync();
+                return RedirectToAction("ListCourses");
+            }
+            return View(model);
+        }
 
         [HttpGet]
         [AllowAnonymous]

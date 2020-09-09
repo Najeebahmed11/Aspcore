@@ -4,14 +4,16 @@ using EmployeeManagement.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EmployeeManagement.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200618142303_vehicleadded")]
+    partial class vehicleadded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,43 +87,6 @@ namespace EmployeeManagement.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("EmployeeManagement.Models.Company", b =>
-                {
-                    b.Property<Guid>("VehicleGuid")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CompanyGuid")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CompanyVDes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CompanyVReg")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CompanyVType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("DeletedByGuid")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool?>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("Modifiedby")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("VehicleGuid", "CompanyGuid");
-
-                    b.ToTable("Companies");
                 });
 
             modelBuilder.Entity("EmployeeManagement.Models.Course", b =>
@@ -409,12 +374,7 @@ namespace EmployeeManagement.Migrations
                     b.Property<string>("MaxPassenger")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("VehiclesId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("VehiclesId");
 
                     b.ToTable("Vehicles");
                 });
@@ -602,14 +562,6 @@ namespace EmployeeManagement.Migrations
                     b.HasOne("EmployeeManagement.Models.UserQualfClaim", "UserQualfClaim")
                         .WithMany("UsersQualfications")
                         .HasForeignKey("UserQualfClaimUserId", "UserQualfClaimQualificationId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("EmployeeManagement.Models.Vehicle", b =>
-                {
-                    b.HasOne("EmployeeManagement.Models.Vehicle", "Vehicles")
-                        .WithMany()
-                        .HasForeignKey("VehiclesId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

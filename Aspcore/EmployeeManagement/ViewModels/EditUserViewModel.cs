@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EmployeeManagement.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -12,8 +13,9 @@ namespace EmployeeManagement.ViewModels
         {
             Claims = new List<string>();
             Roles = new List<string>();
+            Qualifications = new List<string>();
         }
-
+        public Guid UserId { get; set; }
         public string Id { get; set; }
 
         [Required]
@@ -28,5 +30,6 @@ namespace EmployeeManagement.ViewModels
         public List<string> Claims { get; set; }
 
         public IList<string> Roles { get; set; }
+        public IList<string> Qualifications { get; set; }
     }
 }

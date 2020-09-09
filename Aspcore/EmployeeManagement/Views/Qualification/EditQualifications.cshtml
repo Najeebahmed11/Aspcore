@@ -1,0 +1,63 @@
+﻿@model QualificationViewModel
+@{
+    ViewBag.Title = "Edit Qualification";
+}
+
+<form enctype="multipart/form-data" asp-controller="qualification" asp-action="EditQualifications" method="post" class="mt-3">
+    <input hidden asp-for="Uid" />
+    <div class="form-group row">
+        <label asp-for="Uid" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Uid" disabled class="form-control">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Name" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Name" class="form-control" placeholder="Name">
+            <span asp-validation-for="Name" class="text-danger">
+            </span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="Description" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Description" class="form-control" placeholder="Description">
+            <span asp-validation-for="Description" class="text-danger">
+
+            </span>
+        </div>
+    </div>
+
+
+
+
+
+    <div asp-validation-summary="All" class="text-danger">
+
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a asp-controller="qualification" asp-action="ListCourses"
+               class="btn btn-primary">Cancel</a>
+        </div>
+    </div>
+    @section Scripts {
+        <script>
+                $(document).ready(function () {
+                    $('.custom-file-input').on("change", function () {
+                        var fileLabel = $(this).next('.custom-file-label');
+                        var files = $(this)[0].files;
+                        if (files.length > 1) {
+                            fileLabel.html(files.length + ' files selected');
+                        }
+                        else if (files.length == 1) {
+                            fileLabel.html(files[0].name);
+                        }
+                    });
+                });
+        </script>
+    }
+</form>

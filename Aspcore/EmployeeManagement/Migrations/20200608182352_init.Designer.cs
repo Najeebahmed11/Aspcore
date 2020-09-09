@@ -4,14 +4,16 @@ using EmployeeManagement.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EmployeeManagement.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200608182352_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,46 +89,9 @@ namespace EmployeeManagement.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("EmployeeManagement.Models.Company", b =>
-                {
-                    b.Property<Guid>("VehicleGuid")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CompanyGuid")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CompanyVDes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CompanyVReg")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CompanyVType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("DeletedByGuid")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool?>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("Modifiedby")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("VehicleGuid", "CompanyGuid");
-
-                    b.ToTable("Companies");
-                });
-
             modelBuilder.Entity("EmployeeManagement.Models.Course", b =>
                 {
-                    b.Property<Guid>("Uid")
+                    b.Property<Guid>("Guid")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -151,6 +116,9 @@ namespace EmployeeManagement.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -167,7 +135,7 @@ namespace EmployeeManagement.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Uid");
+                    b.HasKey("Guid");
 
                     b.ToTable("Courses");
                 });
@@ -213,227 +181,6 @@ namespace EmployeeManagement.Migrations
                             Email = "najeeeeb27@maal.com",
                             Name = "Najeeb "
                         });
-                });
-
-            modelBuilder.Entity("EmployeeManagement.Models.License", b =>
-                {
-                    b.Property<Guid>("Category")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Alias")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CategoryName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsObselete")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid?>("ModifiedByGuid")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Category");
-
-                    b.ToTable("Licenses");
-                });
-
-            modelBuilder.Entity("EmployeeManagement.Models.Qualification", b =>
-                {
-                    b.Property<Guid>("Uid")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Alias")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("CreateUserQualificationClaimViewModelUserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CreatedByGuid")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("DeletedByGuid")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsObselete")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid?>("ModifiedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Photopath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("QualfType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("QualificationsUid")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Uid");
-
-                    b.HasIndex("CreateUserQualificationClaimViewModelUserId");
-
-                    b.HasIndex("QualificationsUid");
-
-                    b.ToTable("Qualifications");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Qualification");
-                });
-
-            modelBuilder.Entity("EmployeeManagement.Models.UserQualfClaim", b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("QualificationId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("DeleteBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("DisabledBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("ExpiryDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDisabled")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsSelected")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("ModifiedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Verified")
-                        .HasColumnType("bit");
-
-                    b.HasKey("UserId", "QualificationId");
-
-                    b.ToTable("UserQualfClaims");
-                });
-
-            modelBuilder.Entity("EmployeeManagement.Models.UsersQualifications", b =>
-                {
-                    b.Property<Guid>("Uid")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("QualificationUid")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("UserQualfClaimQualificationId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("UserQualfClaimUserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Uid");
-
-                    b.HasIndex("QualificationUid");
-
-                    b.HasIndex("UserQualfClaimUserId", "UserQualfClaimQualificationId");
-
-                    b.ToTable("UsersQualifications");
-                });
-
-            modelBuilder.Entity("EmployeeManagement.Models.Vehicle", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Brand")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Category")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaxPassenger")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("VehiclesId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("VehiclesId");
-
-                    b.ToTable("Vehicles");
-                });
-
-            modelBuilder.Entity("EmployeeManagement.ViewModels.CreateUserQualificationClaimViewModel", b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("QualificationId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Verified")
-                        .HasColumnType("bit");
-
-                    b.HasKey("UserId");
-
-                    b.ToTable("CreateUserQualificationClaimViewModel");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -567,52 +314,6 @@ namespace EmployeeManagement.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("EmployeeManagement.ViewModels.QualificationViewModel", b =>
-                {
-                    b.HasBaseType("EmployeeManagement.Models.Qualification");
-
-                    b.Property<Guid?>("QualificationUid")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasIndex("QualificationUid");
-
-                    b.HasDiscriminator().HasValue("QualificationViewModel");
-                });
-
-            modelBuilder.Entity("EmployeeManagement.Models.Qualification", b =>
-                {
-                    b.HasOne("EmployeeManagement.ViewModels.CreateUserQualificationClaimViewModel", null)
-                        .WithMany("Qualification")
-                        .HasForeignKey("CreateUserQualificationClaimViewModelUserId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("EmployeeManagement.Models.Qualification", "Qualifications")
-                        .WithMany()
-                        .HasForeignKey("QualificationsUid")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("EmployeeManagement.Models.UsersQualifications", b =>
-                {
-                    b.HasOne("EmployeeManagement.Models.Qualification", null)
-                        .WithMany("UsersQualfications")
-                        .HasForeignKey("QualificationUid")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("EmployeeManagement.Models.UserQualfClaim", "UserQualfClaim")
-                        .WithMany("UsersQualfications")
-                        .HasForeignKey("UserQualfClaimUserId", "UserQualfClaimQualificationId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("EmployeeManagement.Models.Vehicle", b =>
-                {
-                    b.HasOne("EmployeeManagement.Models.Vehicle", "Vehicles")
-                        .WithMany()
-                        .HasForeignKey("VehiclesId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -662,14 +363,6 @@ namespace EmployeeManagement.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("EmployeeManagement.ViewModels.QualificationViewModel", b =>
-                {
-                    b.HasOne("EmployeeManagement.Models.Qualification", "Qualification")
-                        .WithMany()
-                        .HasForeignKey("QualificationUid")
-                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }

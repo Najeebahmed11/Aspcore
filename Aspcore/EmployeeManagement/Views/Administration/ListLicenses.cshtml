@@ -1,0 +1,53 @@
+﻿@model IEnumerable<License>
+
+@{
+    ViewBag.Title = "All Licenses";
+}
+<h1>
+    All Licenses
+</h1>
+@if (Model.Any())
+{
+    <a class="btn btn-primary mb-3" style="width:auto" asp-action="CreateLicense"
+       asp-controller="administration">Add new License</a>
+    foreach (var course in Model)
+        {
+            <div class="card mb-3">
+                <div class="card-header">
+                    @course.CategoryName
+                </div>
+                <div class="card-footer">
+                    <form>
+                        <a asp-action="EditLicenses" asp-controller="Administration"
+                           asp-route-category="@course.Category" class="btn btn-primary">Edit</a>
+
+                        <a asp-action="DeleteLicense" asp-controller="Administration"
+                           asp-route-category="@course.Category" class="btn btn-danger">Delete</a>
+                        <a asp-action="DetailsLicense" asp-controller="Administration"
+                           class="btn btn-primary">Details</a>
+                    </form>
+                </div>
+
+            </div>
+        }
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            No License created yet
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Use the button below to create a License
+            </h5>
+            <a class="btn btn-primary" style="width:auto"
+               asp-controller="administration" asp-action="CreateLicense">
+                Create License
+            </a>
+        </div>
+    </div>
+}
+@section Scripts{
+    <script src="~/js/CustomScript.js"></script>
+}

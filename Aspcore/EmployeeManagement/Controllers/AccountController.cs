@@ -28,6 +28,13 @@ namespace EmployeeManagement.Controllers
             this.signInManager = signInManager;
             this.logger = logger;
         }
+        [HttpGet]
+        public IActionResult RegisterUser()
+        {
+            return View();
+        }
+
+
 
 
         [HttpGet]
@@ -247,6 +254,8 @@ namespace EmployeeManagement.Controllers
         {
             return View();
         }
+
+        
         [AcceptVerbs("Get","Post")]
         [AllowAnonymous]
         public async Task<IActionResult> IsEmailInUse(string email)
@@ -325,10 +334,6 @@ namespace EmployeeManagement.Controllers
             ViewBag.ErrorTitle = "Email cannot be confirmed";
             return View("Error");
         }
-
-
-
-
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl)

@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Qualification>
+
+@{
+    ViewBag.Title = "All Qualification details";
+    var photoPath = "~/images/1.PNG";
+}
+<h1>
+    All Courses details
+</h1>
+@if (Model.Any())
+{
+    foreach (var course in Model)
+    {
+<div class="card mb-3">
+    <div class="card-header">
+        Qualification Name:  @course.Name
+    </div>
+    <img class="card-img-top" src="@photoPath" />
+    <div class="card-body">
+        <h5 class="card-title">Qualification Description: @course.Description</h5>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Qualification UID: @course.Uid</h5>
+    </div>
+</div>
+    }
+}
